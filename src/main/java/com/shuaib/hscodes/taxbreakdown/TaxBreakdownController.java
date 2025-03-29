@@ -7,24 +7,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdown;
-import com.shuaib.hscodes.taxbreakdown.services.CreateTaxBreakdownService;
+import com.shuaib.hscodes.taxbreakdown.services.GetTaxBreakdownService;
 
 @RestController
 public class TaxBreakdownController {
-    private final CreateTaxBreakdownService createTaxBreakdownService;
+    private final GetTaxBreakdownService getTaxBreakdownService;
     
-    public TaxBreakdownController(CreateTaxBreakdownService createTaxBreakdownService) {
-        this.createTaxBreakdownService = createTaxBreakdownService;
+    public TaxBreakdownController(GetTaxBreakdownService getTaxBreakdownService) {
+        this.getTaxBreakdownService = getTaxBreakdownService;
     }
 
     @PostMapping
-    public ResponseEntity<List<TaxBreakdown>>  createTaxBreakdown() {
-        return createTaxBreakdownService.execute(null);
+    public ResponseEntity<String> createTaxBreakdown() {
+        return ResponseEntity.status(HttpStatus.OK).body("Post");
     }
 
     @GetMapping
-    public ResponseEntity<String> getTaxBreakdown() {
-        return ResponseEntity.status(HttpStatus.OK).body("Got");
+    public ResponseEntity<List<TaxBreakdown>> getTaxBreakdown() {
+        return getTaxBreakdownService.execute(null);
     }
 
     @PutMapping

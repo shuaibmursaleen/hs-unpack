@@ -12,18 +12,18 @@ public class TaxBreakdown {
 
     @Id
     private String id;
-
     private String hsHeading;
     private String hsCode;
     private String description;
     private String unit;
     private String iclSlsi;
-
     private Duty prefDuty;
     private NestedValue genDuty;
     private NestedValue vat;
-    private NestedValue pal;
-    private NestedValue cess;
+    private NestedValue palGen;
+    private SgDuty pal;
+    private NestedValue cessGen;
+    private SgDuty cess;
     private NestedValue excise;
     private NestedValue surcharge;
     private NestedValue sscl;
@@ -32,6 +32,7 @@ public class TaxBreakdown {
     
     @Data
     public static class NestedValue {
+        private boolean nestedValue;
         private String value;
         private String percentage;
         private String percentageOf;
@@ -51,6 +52,12 @@ public class TaxBreakdown {
         private NestedValue sa;
         private NestedValue sf;
         private NestedValue sd;
+        private NestedValue sg;
+    }
+
+    @Data
+    public static class SgDuty {
+        private NestedValue gen;
         private NestedValue sg;
     }
 }

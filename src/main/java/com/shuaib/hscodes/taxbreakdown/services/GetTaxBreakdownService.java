@@ -11,11 +11,11 @@ import com.shuaib.hscodes.taxbreakdown.TaxBreakdownRepository;
 import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdown;
 
 @Service
-public class CreateTaxBreakdownService implements Command<Void, List<TaxBreakdown>>{
+public class GetTaxBreakdownService implements Command<Void, List<TaxBreakdown>>{
 
     private final TaxBreakdownRepository taxBreakdownRepository;
 
-    public CreateTaxBreakdownService(TaxBreakdownRepository taxBreakdownRepository) {
+    public GetTaxBreakdownService(TaxBreakdownRepository taxBreakdownRepository) {
         this.taxBreakdownRepository = taxBreakdownRepository;
     }
 
