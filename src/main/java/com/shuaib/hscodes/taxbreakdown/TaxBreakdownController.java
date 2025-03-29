@@ -6,15 +6,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdown;
+import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdownDTO;
+import com.shuaib.hscodes.taxbreakdown.services.GetTaxBreakdownByHsCodeService;
 import com.shuaib.hscodes.taxbreakdown.services.GetTaxBreakdownService;
 
 @RestController
 public class TaxBreakdownController {
     private final GetTaxBreakdownService getTaxBreakdownService;
+    private final GetTaxBreakdownByHsCodeService getTaxBreakdownByHsCodeService;
     
-    public TaxBreakdownController(GetTaxBreakdownService getTaxBreakdownService) {
+    public TaxBreakdownController(GetTaxBreakdownService getTaxBreakdownService, GetTaxBreakdownByHsCodeService getTaxBreakdownByHsCodeService) {
         this.getTaxBreakdownService = getTaxBreakdownService;
+        this.getTaxBreakdownByHsCodeService = getTaxBreakdownByHsCodeService;
     }
 
     @PostMapping
@@ -23,8 +26,13 @@ public class TaxBreakdownController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TaxBreakdown>> getTaxBreakdown() {
+    public ResponseEntity<List<TaxBreakdownDTO>> getTaxBreakdown() {
         return getTaxBreakdownService.execute(null);
+    }
+
+    @GetMapping("/{hsCode}")
+    public ResponseEntity<TaxBreakdownDTO> getTaxBreakdownbyHsCode(@PathVariable String hsCode) {
+        return getTaxBreakdownByHsCodeService.execute(hsCode);
     }
 
     @PutMapping
