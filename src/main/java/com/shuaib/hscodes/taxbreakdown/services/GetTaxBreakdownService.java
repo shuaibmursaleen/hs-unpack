@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 import com.shuaib.hscodes.Command;
 import com.shuaib.hscodes.taxbreakdown.TaxBreakdownRepository;
 import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdown;
+import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdownDTO;
 
 @Service
-public class GetTaxBreakdownService implements Command<Void, List<TaxBreakdown>>{
+public class GetTaxBreakdownService implements Command<Void, List<TaxBreakdownDTO>>{
 
     private final TaxBreakdownRepository taxBreakdownRepository;
 
@@ -20,8 +21,9 @@ public class GetTaxBreakdownService implements Command<Void, List<TaxBreakdown>>
     }
 
     @Override
-    public ResponseEntity<List<TaxBreakdown>> execute(Void input) {
+    public ResponseEntity<List<TaxBreakdownDTO>> execute(Void input) {
         List<TaxBreakdown> taxbreakdown= taxBreakdownRepository.findAll();
-        return ResponseEntity.status(HttpStatus.CREATED).body(taxbreakdown);
+        List<TaxBreakdownDTO> taxBreakdownDTOs = taxbreakdown.stream().map(TaxBreakdownDTO::new).toList();
+        return ResponseEntity.status(HttpStatus.CREATED).body(taxBreakdownDTOs);
     }
 }
