@@ -2,25 +2,24 @@ package com.shuaib.hscodes.taxbreakdown.model;
 
 import lombok.Data;
 
+
 @Data
 public class TaxBreakdownDTO {
-    private String id;
-    private String hsHeading;
-    private String hsCode;
-    private String description;
-    private String unit;
-    private String iclSlsi;
-    private Duty prefDuty;
-    private NestedValue genDuty;
-    private NestedValue vat;
-    private NestedValue palGen;
-    private SgDuty pal;
-    private NestedValue cessGen;
-    private SgDuty cess;
-    private NestedValue excise;
-    private NestedValue surcharge;
-    private NestedValue sscl;
-    private NestedValue scl;
+    private Object id;
+    private Object hsHeading;
+    private Object hsCode;
+    private Object description;
+    private Object unit;
+    private Object iclSlsi;
+    private DutyDTO prefDuty;
+    private Object genDuty;
+    private Object vat;
+    private Object pal;
+    private Object cess;
+    private Object excise;
+    private Object surcharge;
+    private Object sscl;
+    private Object scl;
 
     public TaxBreakdownDTO(TaxBreakdown taxBreakdown){
         this.id = taxBreakdown.getId();
@@ -29,16 +28,41 @@ public class TaxBreakdownDTO {
         this.description = taxBreakdown.getDescription();
         this.unit = taxBreakdown.getUnit();
         this.iclSlsi = taxBreakdown.getIclSlsi();
-        this.prefDuty = taxBreakdown.getPrefDuty();
-        this.genDuty = taxBreakdown.getGenDuty();
-        this.vat = taxBreakdown.getVat();
-        this.palGen = taxBreakdown.getPalGen();
-        this.pal = taxBreakdown.getPal();
-        this.cessGen = taxBreakdown.getCessGen();
-        this.cess = taxBreakdown.getCess();
-        this.excise = taxBreakdown.getExcise();
-        this.surcharge = taxBreakdown.getSurcharge();
-        this.sscl = taxBreakdown.getSscl();
-        this.scl = taxBreakdown.getScl();
+        this.prefDuty = setPrefDutyValues(taxBreakdown.getPrefDuty());
+        this.genDuty = setTaxValues(taxBreakdown.getGenDuty());
+        this.vat = setTaxValues(taxBreakdown.getVat());
+
+        if (taxBreakdown.getPalGen() == null) {
+            this.pal = setSgDutyValues(taxBreakdown.getPal());
+        }
+        else this.pal = setTaxValues(taxBreakdown.getPalGen());
+
+        if (taxBreakdown.getCessGen() == null) {
+            this.cess = setSgDutyValues(taxBreakdown.getCess());
+        }
+        else this.cess = setTaxValues(taxBreakdown.getCessGen());
+
+        this.excise = setTaxValues(taxBreakdown.getExcise());
+        this.surcharge = setTaxValues(taxBreakdown.getSurcharge());
+        this.sscl = setTaxValues(taxBreakdown.getSscl());
+        this.scl = setTaxValues(taxBreakdown.getScl());
+    }
+
+    private static Object setTaxValues(NestedValue value) {
+        if (value == null) {
+            return null;
+        }
+        if (!value.isNestedValue()) {
+            return value.getValue();
+        }
+        else return value;
+    }
+
+    private static DutyDTO setPrefDutyValues(Duty prefDuty) {
+        return new DutyDTO(setTaxValues(prefDuty.getAp()), setTaxValues(prefDuty.getAd()), setTaxValues(prefDuty.getBn()), setTaxValues(prefDuty.getGt()), setTaxValues(prefDuty.getIn()), setTaxValues(prefDuty.getPk()), setTaxValues(prefDuty.getSa()), setTaxValues(prefDuty.getSf()), setTaxValues(prefDuty.getSd()), setTaxValues(prefDuty.getSg()));
+    }
+
+    private static SgDutyDTO setSgDutyValues(SgDuty duty) {
+        return new SgDutyDTO(setTaxValues(duty.getGen()), setTaxValues(duty.getSg()));
     }
 }
