@@ -1,5 +1,6 @@
 package com.shuaib.hscodes.taxbreakdown.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,11 @@ public class GetTaxBreakdownByHsCodeService implements Query<String, List<TaxBre
 
     @Override
     public ResponseEntity<List<TaxBreakdownDTO>> execute(String hsCode) {
-        List<TaxBreakdown> hsList = taxBreakdownRepository.findByHsCodeContaining(hsCode);
+        List<TaxBreakdown> hsList = new ArrayList<>();
+        while(hsList.isEmpty() || hsCode.length() != 0) {
+            hsList = taxBreakdownRepository.findByHsCodeContaining(hsCode);
+            hsCode = hsCode.substring(0, hsCode.length()-1);
+        }
         List<TaxBreakdownDTO> hsListDTO = hsList.stream().map(TaxBreakdownDTO::new).toList();
         return ResponseEntity.ok(hsListDTO);
        }
