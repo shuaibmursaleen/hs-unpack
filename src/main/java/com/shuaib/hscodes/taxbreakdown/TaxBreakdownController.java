@@ -31,7 +31,7 @@ public class TaxBreakdownController {
     }
 
     @GetMapping("/{hsCode}")
-    public ResponseEntity<TaxBreakdownDTO> getTaxBreakdownbyHsCode(@PathVariable String hsCode) {
+    public ResponseEntity<List<TaxBreakdownDTO>> getTaxBreakdownbyHsCode(@PathVariable String hsCode) {
         return getTaxBreakdownByHsCodeService.execute(hsCode);
     }
 

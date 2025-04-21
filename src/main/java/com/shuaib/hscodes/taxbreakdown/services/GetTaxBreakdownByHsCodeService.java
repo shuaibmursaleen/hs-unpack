@@ -1,6 +1,6 @@
 package com.shuaib.hscodes.taxbreakdown.services;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdownDTO;
 
 
 @Service
-public class GetTaxBreakdownByHsCodeService implements Query<String, TaxBreakdownDTO>{
+public class GetTaxBreakdownByHsCodeService implements Query<String, List<TaxBreakdownDTO>>{
     private final TaxBreakdownRepository taxBreakdownRepository;
 
     public GetTaxBreakdownByHsCodeService(TaxBreakdownRepository taxBreakdownRepository) {
@@ -20,12 +20,9 @@ public class GetTaxBreakdownByHsCodeService implements Query<String, TaxBreakdow
     }
 
     @Override
-    public ResponseEntity<TaxBreakdownDTO> execute(String hsCode) {
-       Optional<TaxBreakdown> taxBreakdown =  taxBreakdownRepository.findByHsCode(hsCode);
-       if(taxBreakdown.isPresent()) {
-        return ResponseEntity.ok(new TaxBreakdownDTO(taxBreakdown.get()));
+    public ResponseEntity<List<TaxBreakdownDTO>> execute(String hsCode) {
+        List<TaxBreakdown> hsList = taxBreakdownRepository.findByHsCodeContaining(hsCode);
+        List<TaxBreakdownDTO> hsListDTO = hsList.stream().map(TaxBreakdownDTO::new).toList();
+        return ResponseEntity.ok(hsListDTO);
        }
-       return null;
- 
-    }
 }
