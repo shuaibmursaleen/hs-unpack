@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.*;
 
 import com.shuaib.hscodes.taxbreakdown.exceptions.TaxBreakdownNotFoundException;
 import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdownDTO;
-import com.shuaib.hscodes.taxbreakdown.services.GetTaxBreakdownByHsCodeService;
+import com.shuaib.hscodes.taxbreakdown.services.SearchTaxBreakdownService;
 import com.shuaib.hscodes.taxbreakdown.services.GetTaxBreakdownService;
 
 @RestController
 public class TaxBreakdownController {
     private final GetTaxBreakdownService getTaxBreakdownService;
-    private final GetTaxBreakdownByHsCodeService getTaxBreakdownByHsCodeService;
+    private final SearchTaxBreakdownService searchTaxBreakdownService;
     
-    public TaxBreakdownController(GetTaxBreakdownService getTaxBreakdownService, GetTaxBreakdownByHsCodeService getTaxBreakdownByHsCodeService) {
+    public TaxBreakdownController(GetTaxBreakdownService getTaxBreakdownService, SearchTaxBreakdownService searchTaxBreakdownService) {
         this.getTaxBreakdownService = getTaxBreakdownService;
-        this.getTaxBreakdownByHsCodeService = getTaxBreakdownByHsCodeService;
+        this.searchTaxBreakdownService = searchTaxBreakdownService;
     }
 
     @PostMapping
@@ -31,9 +31,9 @@ public class TaxBreakdownController {
         return getTaxBreakdownService.execute(null);
     }
 
-    @GetMapping("/{hsCode}")
-    public ResponseEntity<List<TaxBreakdownDTO>> getTaxBreakdownbyHsCode(@PathVariable String hsCode) throws TaxBreakdownNotFoundException {
-        List<TaxBreakdownDTO> hsList = getTaxBreakdownByHsCodeService.execute(hsCode);
+    @GetMapping("/search")
+    public ResponseEntity<List<TaxBreakdownDTO>> searchTaxBreakdown(@RequestParam String hsCode) throws TaxBreakdownNotFoundException {
+        List<TaxBreakdownDTO> hsList = searchTaxBreakdownService.execute(hsCode);
         if (!hsList.isEmpty()) {
             return ResponseEntity.ok(hsList);
         }

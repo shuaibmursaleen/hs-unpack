@@ -13,10 +13,10 @@ import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdownDTO;
 
 
 @Service
-public class GetTaxBreakdownByHsCodeService implements Query<String, List<TaxBreakdownDTO>>{
+public class SearchTaxBreakdownService implements Query<String, List<TaxBreakdownDTO>>{
     private final TaxBreakdownRepository taxBreakdownRepository;
 
-    public GetTaxBreakdownByHsCodeService(TaxBreakdownRepository taxBreakdownRepository) {
+    public SearchTaxBreakdownService(TaxBreakdownRepository taxBreakdownRepository) {
         this.taxBreakdownRepository = taxBreakdownRepository;
     }
 
