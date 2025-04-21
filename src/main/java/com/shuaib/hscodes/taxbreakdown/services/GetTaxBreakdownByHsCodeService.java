@@ -21,13 +21,13 @@ public class GetTaxBreakdownByHsCodeService implements Query<String, List<TaxBre
     }
 
     @Override
-    public ResponseEntity<List<TaxBreakdownDTO>> execute(String hsCode) {
+    public List<TaxBreakdownDTO> execute(String hsCode) {
         List<TaxBreakdown> hsList = new ArrayList<>();
-        while(hsList.isEmpty() || hsCode.length() != 0) {
-            hsList = taxBreakdownRepository.findByHsCodeContaining(hsCode);
+        while(hsList.isEmpty() && hsCode.length() != 1) {
+            hsList = taxBreakdownRepository.findByHsCodeStartingWith(hsCode);
             hsCode = hsCode.substring(0, hsCode.length()-1);
         }
         List<TaxBreakdownDTO> hsListDTO = hsList.stream().map(TaxBreakdownDTO::new).toList();
-        return ResponseEntity.ok(hsListDTO);
+        return hsListDTO;
        }
 }

@@ -11,5 +11,5 @@ import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdown;
 @Repository
 public interface TaxBreakdownRepository extends MongoRepository<TaxBreakdown, String> {
     Optional<TaxBreakdown> findByHsCode(String hsCode);
-    List<TaxBreakdown> findByHsCodeContaining(String hsCode);
+    List<TaxBreakdown> findByHsCodeStartingWith(String hsCode);
 }

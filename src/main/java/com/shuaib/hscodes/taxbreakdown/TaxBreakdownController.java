@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.shuaib.hscodes.taxbreakdown.exceptions.TaxBreakdownNotFoundException;
 import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdownDTO;
 import com.shuaib.hscodes.taxbreakdown.services.GetTaxBreakdownByHsCodeService;
 import com.shuaib.hscodes.taxbreakdown.services.GetTaxBreakdownService;
@@ -31,8 +32,12 @@ public class TaxBreakdownController {
     }
 
     @GetMapping("/{hsCode}")
-    public ResponseEntity<List<TaxBreakdownDTO>> getTaxBreakdownbyHsCode(@PathVariable String hsCode) {
-        return getTaxBreakdownByHsCodeService.execute(hsCode);
+    public ResponseEntity<List<TaxBreakdownDTO>> getTaxBreakdownbyHsCode(@PathVariable String hsCode) throws TaxBreakdownNotFoundException {
+        List<TaxBreakdownDTO> hsList = getTaxBreakdownByHsCodeService.execute(hsCode);
+        if (!hsList.isEmpty()) {
+            return ResponseEntity.ok(hsList);
+        }
+        throw new TaxBreakdownNotFoundException();
     }
 
     @PutMapping
