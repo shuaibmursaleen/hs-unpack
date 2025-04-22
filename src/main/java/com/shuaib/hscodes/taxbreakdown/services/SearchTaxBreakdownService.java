@@ -3,7 +3,7 @@ package com.shuaib.hscodes.taxbreakdown.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.shuaib.hscodes.Query;
@@ -21,6 +21,7 @@ public class SearchTaxBreakdownService implements Query<String, List<TaxBreakdow
     }
 
     @Override
+    @Cacheable("taxBreakdownCache")
     public List<TaxBreakdownDTO> execute(String hsCode) {
         List<TaxBreakdown> hsList = new ArrayList<>();
         while(hsList.isEmpty() && hsCode.length() != 1) {
