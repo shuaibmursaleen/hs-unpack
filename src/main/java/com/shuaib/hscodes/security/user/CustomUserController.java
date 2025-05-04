@@ -2,6 +2,7 @@ package com.shuaib.hscodes.security.user;
 
 import java.util.*;
 
+import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ public class CustomUserController {
     public ResponseEntity<String> createUser(@RequestBody CustomUser user) {
         Optional<CustomUser> optionalUser = userRepository.findByUsername(user.getUsername());
         if(!optionalUser.isPresent()) {
-            userRepository.save(new CustomUser(user.getId(), user.getUsername(), encoder.encode(user.getPassword())));
+            userRepository.save(new CustomUser(new ObjectId(), user.getUsername(), encoder.encode(user.getPassword())));
             return ResponseEntity.ok("Success");
         }
         return ResponseEntity.badRequest().body("Failure");

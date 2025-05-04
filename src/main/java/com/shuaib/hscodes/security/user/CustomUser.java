@@ -1,5 +1,6 @@
 package com.shuaib.hscodes.security.user;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,7 +13,7 @@ import lombok.Data;
 public class CustomUser {
     
     @Id
-    private final String id;
+    private final ObjectId id;
 
     @NonNull 
     private String username;
