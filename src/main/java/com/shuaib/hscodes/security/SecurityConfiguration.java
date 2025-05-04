@@ -13,6 +13,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import com.shuaib.hscodes.security.jwt.JwtAuthenticationFilter;
+
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfiguration {
@@ -30,10 +32,16 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(AbstractHttpConfigurer:: disable).authorizeHttpRequests(authorize -> {
+            authorize.requestMatchers("/login").permitAll();
             authorize.requestMatchers("/createuser").permitAll();
             authorize.requestMatchers("/open").permitAll();
 
             authorize.anyRequest().authenticated();
-        }).addFilterBefore(new BasicAuthenticationFilter(authenticationManager(httpSecurity)), UsernamePasswordAuthenticationFilter.class).build();
+        }).addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).build();
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
     }
 }
