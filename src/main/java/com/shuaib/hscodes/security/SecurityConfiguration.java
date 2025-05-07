@@ -11,8 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
+    
 import com.shuaib.hscodes.security.jwt.JwtAuthenticationFilter;
 
 @Configuration
@@ -34,7 +33,6 @@ public class SecurityConfiguration {
         return httpSecurity.csrf(AbstractHttpConfigurer:: disable).authorizeHttpRequests(authorize -> {
             authorize.requestMatchers("/login").permitAll();
             authorize.requestMatchers("/createuser").permitAll();
-            authorize.requestMatchers("/open").permitAll();
 
             authorize.anyRequest().authenticated();
         }).addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).build();
