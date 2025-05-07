@@ -11,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-    
 import com.shuaib.hscodes.security.jwt.JwtAuthenticationFilter;
 
 @Configuration
@@ -30,7 +29,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.csrf(AbstractHttpConfigurer:: disable).authorizeHttpRequests(authorize -> {
+        return httpSecurity.cors().and().csrf(AbstractHttpConfigurer:: disable).authorizeHttpRequests(authorize -> {
             authorize.requestMatchers("/login").permitAll();
             authorize.requestMatchers("/createuser").permitAll();
 
