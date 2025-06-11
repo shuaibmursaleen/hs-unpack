@@ -4,14 +4,14 @@ import lombok.Data;
 
 @Data
 public class Duty {
-    private NestedValue ap;
-    private NestedValue ad;
-    private NestedValue bn;
-    private NestedValue gt;
-    private NestedValue in;
-    private NestedValue pk;
-    private NestedValue sa;
-    private NestedValue sf;
-    private NestedValue sd;
-    private NestedValue sg;
+    private String ap;
+    private String ad;
+    private String bn;
+    private String gt;
+    private String in;
+    private String pk;
+    private String sa;
+    private String sf;
+    private String sd;
+    private String sg;
 }

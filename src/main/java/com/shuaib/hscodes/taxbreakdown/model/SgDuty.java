@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class SgDuty {
-    private NestedValue gen;
-    private NestedValue sg;
+    private String gen;
+    private String sg;
 }

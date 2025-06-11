@@ -6,8 +6,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
 
-@Data
 @Document("hs_codes")
+@Data
 public class TaxBreakdown {
 
     @Id
@@ -18,14 +18,14 @@ public class TaxBreakdown {
     private String unit;
     private String iclSlsi;
     private Duty prefDuty;
-    private NestedValue genDuty;
-    private NestedValue vat;
-    private NestedValue palGen;
+    private String genDuty;
+    private String vat;
+    private String palGen;
     private SgDuty pal;
-    private NestedValue cessGen;
+    private String cessGen;
     private SgDuty cess;
-    private NestedValue excise;
-    private NestedValue surcharge;
-    private NestedValue sscl;
-    private NestedValue scl;
+    private String excise;
+    private String surcharge;
+    private String sscl;
+    private String scl;
 }

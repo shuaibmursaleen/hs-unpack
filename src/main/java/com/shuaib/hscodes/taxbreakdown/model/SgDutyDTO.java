@@ -1,14 +1,11 @@
 package com.shuaib.hscodes.taxbreakdown.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class SgDutyDTO {
-    private Object gen;
-    private Object sg;
-
-    public SgDutyDTO(Object gen, Object sg) {
-        this.gen = gen;
-        this.sg = sg;
-    }
+    private String gen;
+    private String sg;
 }

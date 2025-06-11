@@ -5,21 +5,21 @@ import lombok.Data;
 
 @Data
 public class TaxBreakdownDTO {
-    private Object id;
-    private Object hsHeading;
-    private Object hsCode;
-    private Object description;
-    private Object unit;
-    private Object iclSlsi;
+    private String id;
+    private String hsHeading;
+    private String hsCode;
+    private String description;
+    private String unit;
+    private String iclSlsi;
     private DutyDTO prefDuty;
-    private Object genDuty;
-    private Object vat;
+    private String genDuty;
+    private String vat;
     private Object pal;
     private Object cess;
-    private Object excise;
-    private Object surcharge;
-    private Object sscl;
-    private Object scl;
+    private String excise;
+    private String surcharge;
+    private String sscl;
+    private String scl;
 
     public TaxBreakdownDTO(TaxBreakdown taxBreakdown){
         this.id = taxBreakdown.getId();
@@ -48,12 +48,9 @@ public class TaxBreakdownDTO {
         this.scl = setTaxValues(taxBreakdown.getScl());
     }
 
-    private static Object setTaxValues(NestedValue value) {
+    private static String setTaxValues(String value) {
         if (value == null) {
             return null;
-        }
-        if (!value.isNestedValue()) {
-            return value.getValue();
         }
         else return value;
     }
