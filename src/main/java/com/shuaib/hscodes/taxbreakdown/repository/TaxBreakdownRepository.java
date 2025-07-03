@@ -1,4 +1,4 @@
-package com.shuaib.hscodes.taxbreakdown;
+package com.shuaib.hscodes.taxbreakdown.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdown;
+import com.shuaib.hscodes.taxbreakdown.entity.TaxBreakdown;
 
 @Repository
 public interface TaxBreakdownRepository extends MongoRepository<TaxBreakdown, String> {

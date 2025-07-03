@@ -1,4 +1,4 @@
-package com.shuaib.hscodes.taxbreakdown.model;
+package com.shuaib.hscodes.taxbreakdown.exception;
 
 import lombok.Getter;
 

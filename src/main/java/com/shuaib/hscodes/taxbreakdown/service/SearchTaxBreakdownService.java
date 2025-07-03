@@ -1,4 +1,4 @@
-package com.shuaib.hscodes.taxbreakdown.services;
+package com.shuaib.hscodes.taxbreakdown.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,10 +6,10 @@ import java.util.List;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.shuaib.hscodes.Query;
-import com.shuaib.hscodes.taxbreakdown.TaxBreakdownRepository;
-import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdown;
-import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdownDTO;
+import com.shuaib.hscodes.taxbreakdown.dto.TaxBreakdownDTO;
+import com.shuaib.hscodes.taxbreakdown.entity.TaxBreakdown;
+import com.shuaib.hscodes.taxbreakdown.repository.TaxBreakdownRepository;
+import com.shuaib.hscodes.util.Query;
 
 
 @Service

@@ -1,4 +1,8 @@
-package com.shuaib.hscodes.taxbreakdown.model;
+package com.shuaib.hscodes.taxbreakdown.dto;
+
+import com.shuaib.hscodes.taxbreakdown.entity.Duty;
+import com.shuaib.hscodes.taxbreakdown.entity.SgDuty;
+import com.shuaib.hscodes.taxbreakdown.entity.TaxBreakdown;
 
 import lombok.Data;
 

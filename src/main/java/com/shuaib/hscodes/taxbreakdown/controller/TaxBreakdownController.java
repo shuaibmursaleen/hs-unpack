@@ -1,4 +1,4 @@
-package com.shuaib.hscodes.taxbreakdown;
+package com.shuaib.hscodes.taxbreakdown.controller;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.shuaib.hscodes.taxbreakdown.exceptions.TaxBreakdownNotFoundException;
-import com.shuaib.hscodes.taxbreakdown.model.TaxBreakdownDTO;
-import com.shuaib.hscodes.taxbreakdown.services.SearchTaxBreakdownService;
-import com.shuaib.hscodes.taxbreakdown.services.GetTaxBreakdownService;
+import com.shuaib.hscodes.taxbreakdown.dto.TaxBreakdownDTO;
+import com.shuaib.hscodes.taxbreakdown.exception.TaxBreakdownNotFoundException;
+import com.shuaib.hscodes.taxbreakdown.service.GetTaxBreakdownService;
+import com.shuaib.hscodes.taxbreakdown.service.SearchTaxBreakdownService;
 
 @RestController
 public class TaxBreakdownController {

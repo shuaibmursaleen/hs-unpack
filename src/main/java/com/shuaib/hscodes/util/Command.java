@@ -1,4 +1,4 @@
-package com.shuaib.hscodes;
+package com.shuaib.hscodes.util;
 
 import org.springframework.http.ResponseEntity;
 

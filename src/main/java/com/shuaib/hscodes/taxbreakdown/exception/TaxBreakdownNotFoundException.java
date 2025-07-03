@@ -1,4 +1,4 @@
-package com.shuaib.hscodes.taxbreakdown.exceptions;
+package com.shuaib.hscodes.taxbreakdown.exception;
 
 public class TaxBreakdownNotFoundException extends Exception {
     public TaxBreakdownNotFoundException() {

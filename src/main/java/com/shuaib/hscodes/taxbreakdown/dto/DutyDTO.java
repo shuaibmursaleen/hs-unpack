@@ -1,4 +1,4 @@
-package com.shuaib.hscodes.taxbreakdown.model;
+package com.shuaib.hscodes.taxbreakdown.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
