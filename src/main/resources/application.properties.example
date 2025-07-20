@@ -1,6 +1,20 @@
-spring.application.name=
-spring.config.import=optional:file:.env[.properties]
+# DB Configuration
 spring.data.mongodb.uri=${MONGODB_URI}
 spring.data.mongodb.database=${MONGODB_DATABASE}
-jwtSecret=${JWT_SECRET}
-allowedOrigin=${ALLOWED_ORIGIN}
+#
+# JWT secret key
+security.jwt.secret-key =${JWT_SECRET_KEY}
+security.jwt.expiration-time=3600000
+#
+# Mail properties
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=${SUPPORT_EMAIL}
+spring.mail.password=${SUPPORT_EMAIL_PASSWORD}
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+#
+# Allowed origins for CORS
+security.config.allowed-origins=${ALLOWED_ORIGINS}
+
+spring.config.import=optional:file:.env[.properties]
