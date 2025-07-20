@@ -28,4 +28,5 @@ public class TaxBreakdown {
     private String surcharge;
     private String sscl;
     private String scl;
+    private LuxuryTax luxuryTax;
 }

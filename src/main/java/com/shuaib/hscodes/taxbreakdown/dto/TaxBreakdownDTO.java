@@ -1,6 +1,7 @@
 package com.shuaib.hscodes.taxbreakdown.dto;
 
 import com.shuaib.hscodes.taxbreakdown.entity.Duty;
+import com.shuaib.hscodes.taxbreakdown.entity.LuxuryTax;
 import com.shuaib.hscodes.taxbreakdown.entity.SgDuty;
 import com.shuaib.hscodes.taxbreakdown.entity.TaxBreakdown;
 
@@ -24,6 +25,7 @@ public class TaxBreakdownDTO {
     private String surcharge;
     private String sscl;
     private String scl;
+    private LuxuryTaxDTO luxuryTax;
 
     public TaxBreakdownDTO(TaxBreakdown taxBreakdown){
         this.id = taxBreakdown.getId();
@@ -50,6 +52,7 @@ public class TaxBreakdownDTO {
         this.surcharge = setTaxValues(taxBreakdown.getSurcharge());
         this.sscl = setTaxValues(taxBreakdown.getSscl());
         this.scl = setTaxValues(taxBreakdown.getScl());
+        this.luxuryTax = setLuxuryTaxValues(taxBreakdown.getLuxuryTax());
     }
 
     private static String setTaxValues(String value) {
@@ -65,5 +68,12 @@ public class TaxBreakdownDTO {
 
     private static SgDutyDTO setSgDutyValues(SgDuty duty) {
         return new SgDutyDTO(setTaxValues(duty.getGen()), setTaxValues(duty.getSg()));
+    }
+
+    private static LuxuryTaxDTO setLuxuryTaxValues(LuxuryTax luxuryTax) {
+        if (luxuryTax == null) {
+            return null;
+        }
+        else return new LuxuryTaxDTO(setTaxValues(luxuryTax.getFreeThreshhold()), setTaxValues(luxuryTax.getRateAfterThreshhold()));
     }
 }
