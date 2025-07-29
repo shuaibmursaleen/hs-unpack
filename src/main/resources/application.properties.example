@@ -3,7 +3,7 @@ spring.data.mongodb.uri=${MONGODB_URI}
 spring.data.mongodb.database=${MONGODB_DATABASE}
 #
 # JWT secret key
-security.jwt.secret-key =${JWT_SECRET_KEY}
+security.jwt.secret-key=${JWT_SECRET_KEY}
 security.jwt.expiration-time=3600000
 #
 # Mail properties
@@ -16,5 +16,6 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 #
 # Allowed origins for CORS
 security.config.allowed-origins=${ALLOWED_ORIGINS}
+security.config.auth-server=${AUTH_SERVER}
 
 spring.config.import=optional:file:.env[.properties]

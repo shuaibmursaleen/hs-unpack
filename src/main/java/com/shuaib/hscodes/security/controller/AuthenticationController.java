@@ -27,9 +27,12 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody UserRegisterDTO userRegisterDTO) {
+    public ResponseEntity<Object> register(@RequestBody UserRegisterDTO userRegisterDTO) {
         User registerUser = authenticationService.signup(userRegisterDTO);
-        return ResponseEntity.ok(registerUser);
+        if (registerUser == null) {
+            return ResponseEntity.badRequest().body("User with same username or email already exists");
+        }
+        else return ResponseEntity.ok(registerUser);
     }
 
     @PostMapping("/login")

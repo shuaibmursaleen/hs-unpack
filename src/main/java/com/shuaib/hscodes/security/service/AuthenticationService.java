@@ -2,8 +2,9 @@ package com.shuaib.hscodes.security.service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.Random;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,10 @@ import jakarta.mail.MessagingException;
 
 @Service
 public class AuthenticationService {
+
+    @Value("${security.config.auth-server}")
+    private String authServer;
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -32,6 +37,29 @@ public class AuthenticationService {
     }
 
     public User signup(UserRegisterDTO input) {
+        Optional<User> userWithSameEmail = userRepository.findByEmail(input.getEmail());
+        Optional<User> userWithSameName = userRepository.findByUsername(input.getUsername());
+
+        if (userWithSameEmail.isPresent()) {
+            if (userWithSameEmail.get().isEnabled()) {
+                return null;
+            } else {
+                resendVerificationCode(input.getEmail());
+                return userWithSameEmail.get();
+            }
+        }
+
+        if (userWithSameName.isPresent()) {
+            if (userWithSameName.get().getEmail().equals(input.getEmail())) {
+                if (userWithSameName.get().isEnabled()) {
+                    return null;
+                } else {
+                    resendVerificationCode(input.getEmail());
+                    return userWithSameName.get();
+                }
+            } else return null;
+        }
+
         User user = new User(input.getUsername(), input.getEmail(), passwordEncoder.encode(input.getPassword()));
         user.setVerificationCode(generateVerificationCode());
         user.setVerificationCodeExpireTime(LocalDateTime.now().plusMinutes(15));
@@ -58,14 +86,14 @@ public class AuthenticationService {
     }
 
     public void verifyUser(UserVerifyDTO input) {
-        Optional<User> optionalUser = userRepository.findByEmail(input.getEmail());
+        Optional<User> optionalUser = userRepository.findByVerificationCode(input.getVerificationToken());
         
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (user.getVerificationCodeExpireTime().isBefore(LocalDateTime.now())) {
                 throw new RuntimeException("Verification code expired");
             }
-            if (user.getVerificationCode().equals(input.getVerificationCode())) {
+            if (user.getVerificationCode().equals(input.getVerificationToken())) {
                 user.setEnabled(true);
                 user.setVerificationCode(null);
                 user.setVerificationCodeExpireTime(null);
@@ -97,23 +125,22 @@ public class AuthenticationService {
     }
 
     private String generateVerificationCode() {
-        int code = new Random().nextInt(900000) + 100000;
-        return String.valueOf(code);
+        return UUID.randomUUID().toString();
         
     }
     
     private void sendVerificationEmail(User user) {
-        String subject = "Account Verification Code";
-        String verificationCode = "VERIFICATION CODE " + user.getVerificationCode();
+        String subject = "Account Verification Link";
+        String verificationCode = user.getVerificationCode();
 
         String htmlMessage = "<html>"
                 + "<body style=\"font-family: Arial, sans-serif;\">"
                 + "<div style=\"background-color: #f5f5f5; padding: 20px;\">"
                 + "<h2 style=\"color: #333;\">Welcome to our app!</h2>"
-                + "<p style=\"font-size: 16px;\">Please enter the verification code below to continue:</p>"
+                + "<p style=\"font-size: 16px;\">Please click the verification link below to continue:</p>"
                 + "<div style=\"background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1);\">"
-                + "<h3 style=\"color: #333;\">Verification Code:</h3>"
-                + "<p style=\"font-size: 18px; font-weight: bold; color: #007bff;\">" + verificationCode + "</p>"
+                + "<h3 style=\"color: #333;\">Verification Link:</h3>"
+                + "<a href=\"" + authServer + "/auth/verify/" + verificationCode + "\" style=\"font-size: 18px; font-weight: bold; color: #007bff;\">" + authServer + "/auth/verify/" + verificationCode + "</a>"
                 + "</div>"
                 + "</div>"
                 + "</body>"
